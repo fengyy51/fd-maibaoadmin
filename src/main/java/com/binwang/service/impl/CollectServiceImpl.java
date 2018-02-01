@@ -169,9 +169,9 @@ public class CollectServiceImpl implements CollectService {
     //投票结果获取
     @Override
     @Transactional
-    public List<VoteResultModel> voteResult(int curPage, int pageSum, long itemId,long actId){
+    public List<VoteResultModel> voteResult(int curPage, int pageSum, long itemId,long id){
         try {
-            List<VoteResultModel> res = collectDao.voteResult(itemId,actId, (curPage - 1) * pageSum, pageSum);
+            List<VoteResultModel> res = collectDao.voteResult(itemId,id, (curPage - 1) * pageSum, pageSum);
             return res;
         } catch (Exception e) {
             System.out.println(e);
@@ -180,9 +180,9 @@ public class CollectServiceImpl implements CollectService {
     }
     @Override
     @Transactional
-    public int voteResultSum(long itemId,long actId){
+    public int voteResultSum(long itemId,long id){
         try {
-            return collectDao.voteResultSum(itemId,actId);
+            return collectDao.voteResultSum(itemId,id);
         } catch (Exception e) {
             System.out.println(e);
             throw new UserException("获取投票活动列表数量失败!");

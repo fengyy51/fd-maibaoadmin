@@ -35,8 +35,8 @@ public interface CollectService {
     //投票设置删除
     Boolean PrizeParamDelete(int id);
     //投票结果获取
-    List<VoteResultModel> voteResult(int curPage,int pageSum,long itemId,long actId);
-    int voteResultSum(long itemId,long actId);
+    List<VoteResultModel> voteResult(int curPage,int pageSum,long itemId,long id);
+    int voteResultSum(long itemId,long id);
     //投票结果数编辑
     Boolean VoteResultEdit(VoteResultModel voteResultModel);
     //获取投票活动名称

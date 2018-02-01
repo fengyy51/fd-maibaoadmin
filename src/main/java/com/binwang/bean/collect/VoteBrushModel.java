@@ -3,6 +3,7 @@ package com.binwang.bean.collect;
 public class VoteBrushModel {
     private int id;
     private String ip;
+    private String address;
     private String addtime;
     private String record;
     private String useragent;
@@ -13,9 +14,10 @@ public class VoteBrushModel {
     private int num;
     public void VoteResultModel(){
     }
-    public void VoteResultModel(int id,String ip,String addtime,String begin,String end,String record,String useragent,int actId,String openId,int num){
+    public void VoteResultModel(int id,String ip,String address,String addtime,String begin,String end,String record,String useragent,int actId,String openId,int num){
         this.id=id;
         this.ip=ip;
+        this.address=address;
         this.addtime=addtime;
         this.record=record;
         this.useragent=useragent;
@@ -104,5 +106,13 @@ public class VoteBrushModel {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

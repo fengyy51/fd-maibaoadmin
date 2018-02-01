@@ -190,10 +190,10 @@ public class CollectController {
             @RequestParam(value = "curPage") int curPage,
             @RequestParam(value = "pageSum") int pageSum,
             @RequestParam(value = "itemId") long itemId,
-            @RequestParam(value = "actId") long actId) {
+            @RequestParam(value = "id") long id) {
         try {
-            List<VoteResultModel> res = collectService.voteResult(curPage, pageSum,itemId,actId);
-            int sum = collectService.voteResultSum(itemId,actId);
+            List<VoteResultModel> res = collectService.voteResult(curPage, pageSum,itemId,id);
+            int sum = collectService.voteResultSum(itemId,id);
             HashMap<String, Object> m = new HashMap<>();
             m.put("list", res);
             m.put("sum", sum);
