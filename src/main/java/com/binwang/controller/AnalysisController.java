@@ -6,6 +6,7 @@ import com.binwang.service.AnalysisService;
 import com.binwang.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,9 @@ public class AnalysisController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AnalysisController.class);
     @Resource
     private AnalysisService analysisService;
-
-    @CrossOrigin(origins = "http://localhost:8080")
+    @Value("${fbinwang.crossurl}")
+    private String crossUrl;
+    @CrossOrigin(origins ="http://wechat.maibaoscratch.com:8080")
     @RequestMapping(value = "/user-prize", method = RequestMethod.GET)
     @ResponseBody
     public Object UserPrize(){
@@ -34,7 +36,7 @@ public class AnalysisController {
             return ResponseUtil.errorJSON(e.getMessage());
         }
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin(origins = "http://wechat.maibaoscratch.com:8080")
     @RequestMapping(value = "/user-collect", method = RequestMethod.GET)
     @ResponseBody
     public Object UserCollect(){
