@@ -100,6 +100,7 @@ public class GalleryController
             return ResponseUtil.errorJSON("更新审核状态出错");
         }
     }
+    //增加活动管理员
     @RequestMapping(value = "/add-admin", method = RequestMethod.POST)
     @ResponseBody
     public Object addAdmin(@RequestParam("galleryName") String galleryName,
@@ -112,6 +113,32 @@ public class GalleryController
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             return ResponseUtil.errorJSON("增加活动管理员出错");
+        }
+    }
+    @RequestMapping(value = "/allpass", method = RequestMethod.POST)
+    @ResponseBody
+    public Object allPass(@RequestParam("galleryId") String galleryId) {
+        try {
+            Boolean res = galleryService.allPass(galleryId);
+            Map<String, Boolean> m = new HashMap<>();
+            m.put("result", res);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return ResponseUtil.errorJSON("全部审核通过出错");
+        }
+    }
+    @RequestMapping(value = "/allreject", method = RequestMethod.POST)
+    @ResponseBody
+    public Object allReject(@RequestParam("galleryId") String galleryId) {
+        try {
+            Boolean res = galleryService.allReject(galleryId);
+            Map<String, Boolean> m = new HashMap<>();
+            m.put("result", res);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return ResponseUtil.errorJSON("全部取消审核出错");
         }
     }
 

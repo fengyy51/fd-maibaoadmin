@@ -30,4 +30,15 @@ public interface IGalleryDao {
     //增加活动管理者
     @Insert("insert into gallery_admin(gallery_name,gallery_user) values(#{galleryName},#{galleryAdmin}) ")
     int addAdmin(@Param("galleryName")String galleryName, @Param("galleryAdmin")String galleryAdmin);
+
+    //全部审核通过
+    @Update("update scratch_api_galleryproduction set admin_checked =1 where gallery_id=#{galleryId}")
+    int allPass(@Param("galleryId") String galleryId);
+
+    //全部取消审核
+    @Update("update scratch_api_galleryproduction set admin_checked =0 where gallery_id=#{galleryId}")
+    int allReject(@Param("galleryId") String galleryId);
+
+
+
 }

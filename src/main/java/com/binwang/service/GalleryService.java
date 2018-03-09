@@ -23,4 +23,6 @@ public interface GalleryService {
 
     Boolean handleApprove(String galleryId,String productionId, int type);
     Boolean addAdmin(String galleryName,String galleryAdmin);
+    Boolean allPass(String galleryId);
+    Boolean allReject(String galleryId);
 }

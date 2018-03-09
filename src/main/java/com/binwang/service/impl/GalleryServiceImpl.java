@@ -99,6 +99,29 @@ public class GalleryServiceImpl implements GalleryService {
             return false;
         }
     }
+    @Override
+    @Transactional
+    public Boolean allPass(String galleryId) {
+        int res = iGalleryDao.allPass( galleryId);
+        if (res > 0)
+            return true;
+        else {
+            LOGGER.error("全部审核通过失败，galleryId为：" + galleryId);
+            return false;
+        }
+    }
+    @Override
+    @Transactional
+    public Boolean allReject(String galleryId) {
+        int res = iGalleryDao.allReject( galleryId);
+        if (res > 0)
+            return true;
+        else {
+            LOGGER.error("全部取消审核通过失败，galleryId为：" + galleryId);
+            return false;
+        }
+    }
+
 
 
 }
