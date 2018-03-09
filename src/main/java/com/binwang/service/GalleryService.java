@@ -7,17 +7,20 @@ import com.binwang.bean.activity.SignListModel;
 import com.binwang.bean.collect.CDetailModel;
 import com.binwang.bean.collect.CListModel;
 import com.binwang.bean.gallery.GalleryListModel;
+import com.binwang.bean.gallery.GalleryProModel;
 
 import java.util.List;
 /**
  * Created by yy on 17/12/13.
  */
 public interface GalleryService {
-    List<GalleryListModel> list(int curPage, int pageSum, String name, String begin, String end);
-    int listSum(String name,String begin, String end);
-//    List<CListModel> getList(long collectId, int type, String openId, int curPage, int pageSum);
-//
-//    CDetailModel getDetail(long collectId, long itemId);
-//
-//    Boolean handleApprove(long collectId, long itemId, int type);
+    List<GalleryListModel> list(String username,int curPage, int pageSum, String name, String begin, String end);
+    int listSum(String username,String name,String begin, String end);
+    List<GalleryProModel> getListPro(String name, int type, String galleryId, int curPage, int pageSum);
+    int getListProSum( String name,int type,String galleryId);
+
+    int getApproveSum(String galleryId);
+
+    Boolean handleApprove(String galleryId,String productionId, int type);
+    Boolean addAdmin(String galleryName,String galleryAdmin);
 }

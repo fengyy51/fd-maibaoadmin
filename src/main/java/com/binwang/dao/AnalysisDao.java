@@ -13,7 +13,7 @@ import java.util.List;
 public interface AnalysisDao {
 
     @Select("SELECT count(id) as num,add_time as addtime from f_user_prize GROUP BY Time(FROM_UNIXTIME(add_time))")
-    public List<Userprize>listUserPrize();
+    List<Userprize>listUserPrize();
     @Select("SELECT count(id) as num,add_time as addtime from f_collect GROUP BY Time(FROM_UNIXTIME(add_time))")
-    public List<UserCollect>listUserCollect();
+    List<UserCollect>listUserCollect();
 }

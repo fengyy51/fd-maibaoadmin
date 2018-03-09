@@ -7,6 +7,7 @@ import com.binwang.bean.activity.SignListModel;
 import com.binwang.bean.collect.CDetailModel;
 import com.binwang.bean.collect.CListModel;
 import com.binwang.bean.gallery.GalleryListModel;
+import com.binwang.bean.gallery.GalleryProModel;
 import com.binwang.service.ActivityService;
 import com.binwang.service.GalleryService;
 import com.binwang.util.ResponseUtil;
@@ -47,12 +48,13 @@ public class GalleryController
             try {
                 List<GalleryListModel> res =new ArrayList<>();
                 int sum=0;
-                if(username.equals("binwang158")){
+//                List<String>admins=galleryService.getListAdmin();
+//                if(username.equals("binwang158")){
                     LOGGER.info(username);
-                    res=galleryService.list(curPage, pageSum, name,begin, end);
+                    res=galleryService.list(username,curPage, pageSum, name,begin, end);
                     LOGGER.info(res.toString());
-                    sum = galleryService.listSum(name, begin, end);
-                }
+                    sum = galleryService.listSum(username,name, begin, end);
+//                }
                 HashMap<String, Object> m = new HashMap<>();
                 m.put("list", res);
                 m.put("sum", sum);
@@ -62,85 +64,56 @@ public class GalleryController
                 return ResponseUtil.errorJSON(e.getMessage());
             }
         }
-
-//    @RequestMapping("/list")
-//    @ResponseBody
-//    public Object list(@RequestParam("collectId") long collectId,
-//                       @RequestParam("type") int type,
-//                       @RequestParam("openId") String openId,
-//                       @RequestParam("curPage") int curPage,
-//                       @RequestParam("pageSum") int pageSum) {
-//        try {
-//            List<CListModel> list = galleryService.getList(collectId, type,openId, curPage, pageSum);
-//            int sum = galleryService.getListSum(collectId, type,openId);
-//            //获取已通过人数
-//            int approveSum = galleryService.getApproveSum(collectId);
-//            Map<String, Object> m = new HashMap<>();
-//            m.put("list", list);
-//            m.put("sum", sum);
-//            m.put("approveSum", approveSum);
-//            return ResponseUtil.okJSON(m);
-//        } catch (Exception e) {
-//            return ResponseUtil.errorJSON("获取列表出错");
-//        }
-//    }
-//
-//
-//    @RequestMapping("/detail")
-//    @ResponseBody
-//    public Object detail(@RequestParam("collectId") long collectId,
-//                         @RequestParam("itemId") long itemId) {
-//        try {
-//            CDetailModel res = galleryService.getDetail(collectId, itemId);
-//            return ResponseUtil.okJSON(res);
-//        } catch (Exception e) {
-//            return ResponseUtil.errorJSON("获取详情失败");
-//        }
-//    }
-//
-//    @RequestMapping(value = "/handle", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Object handle(@RequestParam("collectId") long collectId,
-//                         @RequestParam("itemId") long itemId,
-//                         @RequestParam("approve") int approve) {
-//        try {
-//            Boolean res = galleryService.handleApprove(collectId, itemId, approve);
-//            Map<String, Boolean> m = new HashMap<>();
-//            m.put("result", res);
-//            return ResponseUtil.okJSON(m);
-//        } catch (Exception e) {
-//            return ResponseUtil.errorJSON("更新审核状态出错");
-//        }
-//    }
-//
-//
-//    @RequestMapping(value = "/post-first-img", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Object firstImgPost(@RequestParam("id") long id,
-//                               @RequestParam("url") String url) {
-//        try {
-//            Boolean res = galleryService.firstImgUpdate(id, url);
-//            Map<String, Boolean> m = new HashMap<>();
-//            m.put("result", res);
-//            return ResponseUtil.okJSON(m);
-//        } catch (Exception e) {
-//            return ResponseUtil.errorJSON("出错,确保序号存在");
-//        }
-//    }
-//
-//    @RequestMapping(value = "/post-detail-img",method = RequestMethod.POST)
-//    @ResponseBody
-//    public Object detailImgPost(@RequestParam("id") long id,
-//                                @RequestParam("urls") String urls) {
-//        try {
-//            Boolean res = galleryService.detailImgUpdate(id, urls);
-//            Map<String, Boolean> m = new HashMap<>();
-//            m.put("result", res);
-//            return ResponseUtil.okJSON(m);
-//        } catch (Exception e) {
-//            return ResponseUtil.errorJSON("出错,确保序号存在");
-//        }
-//    }
+    @RequestMapping("/list-production")
+    @ResponseBody
+    public Object list(@RequestParam("name") String name,
+                       @RequestParam("type") int type,
+                       @RequestParam("galleryId") String galleryId,
+                       @RequestParam("curPage") int curPage,
+                       @RequestParam("pageSum") int pageSum) {
+        try {
+            List<GalleryProModel> list = galleryService.getListPro(name, type,galleryId, curPage, pageSum);
+            int sum = galleryService.getListProSum(name, type,galleryId);
+            //获取已通过人数
+            int approveSum = galleryService.getApproveSum(galleryId);
+            Map<String, Object> m = new HashMap<>();
+            m.put("list", list);
+            m.put("sum", sum);
+            m.put("approveSum", approveSum);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            return ResponseUtil.errorJSON("获取专题作品列表出错");
+        }
+    }
+    @RequestMapping(value = "/handle", method = RequestMethod.POST)
+    @ResponseBody
+    public Object handle(@RequestParam("galleryId") String galleryId,
+                         @RequestParam("productionId") String productionId,
+                         @RequestParam("type") int type) {
+        try {
+            Boolean res = galleryService.handleApprove(galleryId, productionId, type);
+            Map<String, Boolean> m = new HashMap<>();
+            m.put("result", res);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return ResponseUtil.errorJSON("更新审核状态出错");
+        }
+    }
+    @RequestMapping(value = "/add-admin", method = RequestMethod.POST)
+    @ResponseBody
+    public Object addAdmin(@RequestParam("galleryName") String galleryName,
+                         @RequestParam("galleryAdmin") String galleryAdmin ) {
+        try {
+            Boolean res = galleryService.addAdmin(galleryName, galleryAdmin);
+            Map<String, Boolean> m = new HashMap<>();
+            m.put("result", res);
+            return ResponseUtil.okJSON(m);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            return ResponseUtil.errorJSON("增加活动管理员出错");
+        }
+    }
 
 
 }

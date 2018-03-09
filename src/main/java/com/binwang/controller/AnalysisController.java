@@ -24,7 +24,7 @@ public class AnalysisController {
     private AnalysisService analysisService;
     @Value("${fbinwang.crossurl}")
     private String crossUrl;
-    @CrossOrigin(origins ="http://wechat.maibaoscratch.com:8080")
+//    @CrossOrigin(origins ="http://wechat.tuopinpin.com:8080")
     @RequestMapping(value = "/user-prize", method = RequestMethod.GET)
     @ResponseBody
     public Object UserPrize(){
@@ -32,11 +32,12 @@ public class AnalysisController {
             List<Userprize> list = analysisService.listUserPrize();
             return ResponseUtil.okJSON(list);
         } catch (Exception e) {
+            LOGGER.error("获取抽奖时间统计失败");
             LOGGER.error(e.getMessage());
             return ResponseUtil.errorJSON(e.getMessage());
         }
     }
-    @CrossOrigin(origins = "http://wechat.maibaoscratch.com:8080")
+//    @CrossOrigin(origins = "http://wechat.tuopinpin.com:8080")
     @RequestMapping(value = "/user-collect", method = RequestMethod.GET)
     @ResponseBody
     public Object UserCollect(){
@@ -44,6 +45,7 @@ public class AnalysisController {
             List<UserCollect> list = analysisService.listUserCollect();
             return ResponseUtil.okJSON(list);
         } catch (Exception e) {
+            LOGGER.error("获取报名时间统计失败");
             LOGGER.error(e.getMessage());
             return ResponseUtil.errorJSON(e.getMessage());
         }
