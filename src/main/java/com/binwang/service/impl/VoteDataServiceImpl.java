@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.*;
 @Service
 public class VoteDataServiceImpl implements VoteDataService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShopServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VoteDataService.class);
 
     @Resource
     private IVoteDataDao iVoteDataDao;
@@ -34,12 +34,12 @@ public class VoteDataServiceImpl implements VoteDataService {
 
     @Override
     @Transactional
-    public Boolean add(String content,List<String>voteDataImgs) {
+    public Boolean add(long actId,String content,List<String>voteDataImgs) {
         String voteImgsUrl="";
         if (voteDataImgs.size() > 0) {
             voteImgsUrl+= StringUtils.join(voteDataImgs.toArray(),"&&&");
         }
-        int res=iVoteDataDao.addVoteData(content,voteImgsUrl);
+        int res=iVoteDataDao.addVoteData(actId,content,voteImgsUrl);
         if(res>0){
             return true;
         }else {
@@ -49,22 +49,33 @@ public class VoteDataServiceImpl implements VoteDataService {
     }
 
     @Override
-    public List<VoteListModel> list(String content,int curPage, int pageSum) {
+    public List<VoteListModel> list(String content,String actId,int curPage, int pageSum) {
         try {
-            List<VoteListModel> res = iVoteDataDao.listVoteData(content, (curPage - 1) * pageSum, pageSum);
+            List<VoteListModel> res=new ArrayList<>();
+            int act_id=-1;
+            if(actId!=""){
+                act_id=Integer.parseInt(actId);
+            }
+            res= iVoteDataDao.listVoteData(content,act_id, (curPage - 1) * pageSum, pageSum);
             return res;
         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             LOGGER.error("获取投票作品数据列表失败");
             throw new UserException("获取投票作品数据列表失败");
         }
     }
 //
     @Override
-    public int listSum(String content) {
+    public int listSum(String content,String actId) {
         try {
-            int sum = iVoteDataDao.listVoteDataSum(content);
+            int act_id=-1;
+            if(actId!=""){
+                act_id=Integer.parseInt(actId);
+            }
+            int sum = iVoteDataDao.listVoteDataSum(content,act_id);
             return sum;
         } catch (Exception e) {
+            LOGGER.error(e.getMessage());
             LOGGER.error("统计投票作品数据列表数量失败");
             throw new UserException("统计投票作品数据列表数量失败");
         }
@@ -82,9 +93,11 @@ public class VoteDataServiceImpl implements VoteDataService {
                 imgUrls.add(imgs[i]);
             }
             String content=iVoteDataDao.getContentById(id);
+            long actId=iVoteDataDao.getActIdById(id);
             VoteParam s=new VoteParam();
             s.setId(id);
             s.setContent(content);
+            s.setActId(actId);
             s.setVoteDataImgs(imgUrls);
             return s;
         } catch (Exception e) {

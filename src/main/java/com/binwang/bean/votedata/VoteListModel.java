@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class VoteListModel {
     private long id;
+    private long actId;
     private String imgUrls;
     private String content;
 
@@ -19,6 +20,14 @@ public class VoteListModel {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getActId() {
+        return actId;
+    }
+
+    public void setActId(long actId) {
+        this.actId = actId;
     }
 
     public void setContent(String content) {

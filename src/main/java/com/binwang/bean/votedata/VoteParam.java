@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class VoteParam {
     private long id;
+    private long actId;
     private String content;
     private List<String> voteDataImgs = new ArrayList<>();
 //    private Boolean voteDataImgsChange;
@@ -30,6 +31,14 @@ public class VoteParam {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setActId(long actId) {
+        this.actId = actId;
+    }
+
+    public long getActId() {
+        return actId;
     }
 
     public String getContent() {
