@@ -26,8 +26,8 @@ public interface IVoteDataDao {
     @Select("select act_id from vote_data_yiwu where id=#{id}")
     long getActIdById(@Param("id")long id);
 
-    @Update("update vote_data_yiwu set content=#{content},img_url=#{voteImgsUrl} where id=#{id}")
-    int edit(@Param("id")long id,@Param("content")String content,@Param("voteImgsUrl")String voteImgsUrl);
+    @Update("update vote_data_yiwu set act_id=#{actId},content=#{content},img_url=#{voteImgsUrl} where id=#{id}")
+    int edit(@Param("id")long id,@Param("actId")long actId,@Param("content")String content,@Param("voteImgsUrl")String voteImgsUrl);
 
     @Delete("delete from vote_data_yiwu where id=#{id}")
     int delete(@Param("id")long id);

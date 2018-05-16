@@ -114,7 +114,8 @@ public class VoteDataServiceImpl implements VoteDataService {
         }
         long id=voteParam.getId();
         String content=voteParam.getContent();
-        int mainRes = iVoteDataDao.edit(id,content,voteImgsUrl);
+        long actId=voteParam.getActId();
+        int mainRes = iVoteDataDao.edit(id,actId,content,voteImgsUrl);
         if (mainRes > 0) {
             return true;
         } else {
