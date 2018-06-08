@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 @Mapper
 public interface IVoteDataDao {
-    @Insert("INSERT INTO vote_data_yiwu (act_id,content,img_url) VALUES(#{actId},#{content},#{voteImgsUrl} )")
-    int addVoteData(@Param("actId")long actId,@Param("content")String content,@Param("voteImgsUrl")String voteImgsUrl);
+    @Insert("INSERT INTO vote_data_yiwu (username,act_id,content,img_url) VALUES(#{username},#{actId},#{content},#{voteImgsUrl} )")
+    int addVoteData(@Param("username")String username,@Param("actId")long actId,@Param("content")String content,@Param("voteImgsUrl")String voteImgsUrl);
 
-    List<VoteListModel> listVoteData(@Param("content")String content,@Param("act_id")int act_id,@Param("start") int start, @Param("pageSum") int pageSum);
+    List<VoteListModel> listVoteData(@Param("username")String username,@Param("content")String content,@Param("act_id")int act_id,@Param("start") int start, @Param("pageSum") int pageSum);
 
-    int listVoteDataSum(@Param("content")String content,@Param("act_id")int act_id);
+    int listVoteDataSum(@Param("username")String username,@Param("content")String content,@Param("act_id")int act_id);
 
     @Select("select img_url from vote_data_yiwu where id=#{id}")
     String getImgById(@Param("id")long id);

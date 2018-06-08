@@ -6,11 +6,11 @@ import com.binwang.bean.votedata.VoteParam;
 import java.util.List;
 
 public interface VoteDataService {
-    Boolean add(long actId,String content,List<String>voteDataImgs);
+    Boolean add(String username,long actId,String content,List<String>voteDataImgs);
 
-    List<VoteListModel> list(String content,String actId,int curPage, int pageSum);
+    List<VoteListModel> list(String username,String content,String actId,int curPage, int pageSum);
 
-    int listSum(String content,String actId);
+    int listSum(String username,String content,String actId);
 
     VoteParam get(long id);
 

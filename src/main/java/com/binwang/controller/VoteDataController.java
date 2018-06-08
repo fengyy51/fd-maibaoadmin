@@ -30,11 +30,13 @@ public class VoteDataController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public Object add(@RequestParam(value = "actId")long actId,
+    public Object add(
+                      @RequestParam(value = "username")String username,
+                      @RequestParam(value = "actId")long actId,
                       @RequestParam(value = "content")String content,
                       @RequestParam(value = "voteDataImgs")List<String> voteDataImgs) {
         try {
-            Boolean res = voteDataService.add(actId,content,voteDataImgs);
+            Boolean res = voteDataService.add(username,actId,content,voteDataImgs);
             return ResponseUtil.okJSON(res);
         } catch (Exception e) {
             LOGGER.error("投票作品信息添加接口：" + e.getMessage());
@@ -44,13 +46,14 @@ public class VoteDataController {
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    public Object list(@RequestParam(value = "content") String content,
+    public Object list( @RequestParam(value = "username")String username,
+                        @RequestParam(value = "content") String content,
                        @RequestParam(value = "actId") String actId,
                        @RequestParam(value = "curPage") int curPage,
                        @RequestParam(value = "pageSum") int pageSum){
         try {
-            List<VoteListModel> res = voteDataService.list(content,actId,curPage, pageSum);
-            int sum = voteDataService.listSum(content,actId);
+            List<VoteListModel> res = voteDataService.list(username,content,actId,curPage, pageSum);
+            int sum = voteDataService.listSum(username,content,actId);
             HashMap<String,Object> m = new HashMap<>();
             m.put("list", res);
             m.put("sum", sum);

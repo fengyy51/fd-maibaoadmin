@@ -34,12 +34,12 @@ public class VoteDataServiceImpl implements VoteDataService {
 
     @Override
     @Transactional
-    public Boolean add(long actId,String content,List<String>voteDataImgs) {
+    public Boolean add(String username,long actId,String content,List<String>voteDataImgs) {
         String voteImgsUrl="";
         if (voteDataImgs.size() > 0) {
             voteImgsUrl+= StringUtils.join(voteDataImgs.toArray(),"&&&");
         }
-        int res=iVoteDataDao.addVoteData(actId,content,voteImgsUrl);
+        int res=iVoteDataDao.addVoteData(username,actId,content,voteImgsUrl);
         if(res>0){
             return true;
         }else {
@@ -49,14 +49,14 @@ public class VoteDataServiceImpl implements VoteDataService {
     }
 
     @Override
-    public List<VoteListModel> list(String content,String actId,int curPage, int pageSum) {
+    public List<VoteListModel> list(String username,String content,String actId,int curPage, int pageSum) {
         try {
             List<VoteListModel> res=new ArrayList<>();
             int act_id=-1;
             if(actId!=""){
                 act_id=Integer.parseInt(actId);
             }
-            res= iVoteDataDao.listVoteData(content,act_id, (curPage - 1) * pageSum, pageSum);
+            res= iVoteDataDao.listVoteData(username,content,act_id, (curPage - 1) * pageSum, pageSum);
             return res;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -66,13 +66,13 @@ public class VoteDataServiceImpl implements VoteDataService {
     }
 //
     @Override
-    public int listSum(String content,String actId) {
+    public int listSum(String username,String content,String actId) {
         try {
             int act_id=-1;
             if(actId!=""){
                 act_id=Integer.parseInt(actId);
             }
-            int sum = iVoteDataDao.listVoteDataSum(content,act_id);
+            int sum = iVoteDataDao.listVoteDataSum(username,content,act_id);
             return sum;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
